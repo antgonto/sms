@@ -13,11 +13,38 @@ Los métodos son en su totalidad backend, y muestran una interfaz simple de prue
 
 ### Prerequisites
 
-Para poder utilizar el módulo, se necesitan las siguientes 
+Para poder utilizar el módulo:
+
+- Se debe tener instalado npm.
+- La Base de Datos con la que trabaja el API es MySQL, en caso de cambios ver la seccion *deployment* 
+
+- Si se consume como API, el software en cuestión a utilizar la funcionalidad debe tener la capacidad de llamar las rutas de los métodos dentro del proyecto. 
 
 ```
-Give examples
+fetch(link)
+.then(retornar algún valor)
 ```
+
+En caso de querer recrear el uso de ambas API, se necesitan las siguientes dependencias instaladas a través de npm, con sus respectivos números de versiones:
+
+### Ejemplo de cómo deberían verse en el package.json
+
+```
+  "bcrypt": "^5.0.0",
+  "body-parser": "^1.19.0",
+  "cookie-parser": "^1.4.5",
+  "dotenv": "^8.2.0",
+  "ejs": "^3.1.3",
+  "express": "^4.17.1",
+  "mysql": "^2.18.1",
+  "nodemailer": "^6.4.10",
+  "nodemon": "^2.0.4",
+  "parser": "^0.1.4",
+  "socket.io": "^2.3.0"
+ 
+```
+
+Se debe contar con Xampp, para hacer uso de MySql mediante la activacion del puerto de Apache. 
 
 ### Installing
 
@@ -67,19 +94,14 @@ Add additional notes about how to deploy this on a live system
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Daniel ???** 
+* **Kevin Artavia Varela**  
 
 ## License
 
