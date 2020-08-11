@@ -25,7 +25,7 @@ fetch(link)
 .then(retornar algún valor)
 ```
 
-En caso de querer recrear el uso de ambas API, se necesitan las siguientes dependencias instaladas a través de npm, con sus respectivos números de versiones:
+En caso de querer recrear el uso de ambas API, se necesitan las siguientes dependencias instaladas a través de npm, con sus respectivos números de versiones e un entorno de Node.js (API):
 
 ### Ejemplo de cómo deberían verse en el package.json
 
@@ -48,55 +48,121 @@ Se debe contar con Xampp, para hacer uso de MySql mediante la activacion del pue
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+Para la instalación y utilización de la API:
 
-Say what the step will be
+- Levantar mediante Xampp el puerto de MySQL mediante Apache, esto permitirá la conexión con la BD.
+- Habilitar el puerto 3500, es sobre el cuál trabaja la API.
+- Levantar el API, utilizar la interfaz de prueba. En caso de utilizar con otra interfaz o view engine, leer *in case of changes*.
+
+
+##### * En la wiki se encuentra la documentación exacta del funcionamiento del código de cada API.
+
+### In case of changes
+
+En caso de querer cambiar partes del código:
+
+1. Los emisores tanto email como número de teléfono son propios de las APIs dentro de este proyecto, no se pueden cambiar. 
+2. Las interfaces que se incluyen son de prueba para el módulo, en caso de utilizar nuevas se deben trasladar los scripts dentro de index.ejs y login.ejs; respetando el nombre
+de sus id en los tag del html, es posible trasladar los scripts a otras pantallas.
+
+Se adjuntan scripts de las pantallas:
+
+##### * Para registro y verificación de una cuenta
+```
+    <script>
+        document.getElementById('FormSub').addEventListener('submit',Send);
+        function Send(e) {
+            e.preventDefault();
+            var email = document.querySelector('#email').value;
+            var pass = document.querySelector('#password').value;
+            var pass2 = document.querySelector('#password2').value;
+            if(pass === pass2){
+                fetch('/',{
+                method: 'post',
+                headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify({Email: email, Password: pass, Password2 : pass2})
+            })
+            .then((res)=>res.json())
+            .then(data => {
+                console.log(data)
+            })
+            } else {
+                document.getElementById('msg').innerHTML = "Contraseñas no coinciden";
+            }
+        }
+    </script>
+```
+
+##### * Login para verificación de cuenta.
 
 ```
-Give the example
+ <script>
+        document.getElementById('FormSub').addEventListener('submit',Send);
+        function Send(e) {
+            e.preventDefault();
+            var email = document.querySelector('#email').value;
+            var pass = document.querySelector('#password').value;
+            var pass2 = document.querySelector('#password2').value;
+            if(pass === pass2){
+                fetch('/',{
+                method: 'post',
+                headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify({Email: email, Password: pass, Password2 : pass2})
+            })
+            .then((res)=>res.json())
+            .then(data => {
+                console.log(data)
+            })
+            } else {
+                document.getElementById('msg').innerHTML = "Contraseñas no coinciden";
+            }
+        }
+    </script>
 ```
 
-And repeat
+Estos scripts pueden ser añadidos directamente al final del body de cada .ejs, .hbs o cualquier otro motor de vistas para Node. En caso de utilizar React o Angular, se recomienda convertirlo en un método tipo controlador, con su propia ruta y se llame su pantalla directamente mediante una view co  su respectiva ruta.
+
+
+### Para poder cambiar el mensaje que llega al correo:
 
 ```
-until finished
+var mailOption = {
+            from :'pruebadenodemailer@gmail.com', // sender this is your email here
+            to : `${req.body.Email}`, // receiver email2
+            subject: "Account Verification",
+            html: `<h1> ((ESCRIBIR SU NUEVO MENSAJE ACÁ)) <h1><br><hr><p></p>
+        <br><a href="http://localhost:3500/verification/?verify=${verify}">Click AQUI</a>`
+        }
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+PD: no se debe tocar el link de verificación ya que en él se encuentra la ruta con el código de verificación que permite hacer el login efectivamente con la cuenta verificada.
 
-## Running the tests
+### Para cambiar el puerto sobre el cuál corre el programa
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+No es recomendado, pero en caso de necesitarse cambiar el puerto sobre el cual corre el API:
 
 ```
-Give an example
+app.listen(NUEVO NÚMERO DE PUERTO);
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+### *ADVERTENCIA* 
+Esto asegura el cambio de puerto, pero no en todos los lugares que se utiliza como en las rutas.
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+El programa se apoya en MySQL, es posible cambiar el motor de base de datos MAS no se recomienda ya que presentaría cambios grandes en su estructura. Se recomienda visitar la wiki para ver la construcción y utilización de ambos módulos de las API por separado y sustituir la BD desde ahí.
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+* NodeJS
+* Nodemailer API
+* Twilio API
 
 ## Authors
 
@@ -106,9 +172,3 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
