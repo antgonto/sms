@@ -166,7 +166,7 @@ El programa se apoya en MySQL, es posible cambiar el motor de base de datos MAS 
 
 ## Authors
 
-* **Daniel ???** 
+* **José Daniel Chacón Dengo** 
 * **Kevin Artavia Varela**  
 
 ## License
